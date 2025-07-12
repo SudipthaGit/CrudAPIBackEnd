@@ -14,6 +14,8 @@ export class server{
         this.HandleErrors();
     }
     setConfig(){
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cors()); // Enable CORS for all routes
         this.ConnectToMongoDB();
         this.configuireBodyParser();

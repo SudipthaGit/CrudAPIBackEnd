@@ -25,7 +25,7 @@ export class UserController {
                 role: req.body.role,
                 isActive: true,
                 createdAt: new Date()
-            }); 
+            });
             const data = await userDetails.save();
             res.status(200).json({
                 message: "User details inserted successfully",
@@ -36,5 +36,54 @@ export class UserController {
             next(err);
         }
 
+    }
+    //update user
+    static async updateUserDetails(req, res, next) {
+        try {
+            const email = req.body.email; // Assuming email is used as a unique identifier
+            console.log(email)
+            const data = await user.findOneAndUpdate(
+                { email: email },
+                { name: req.body.name },
+                { new: true }
+            );
+            if (!data) {
+                return res.status(404).json({
+                    message: "User not found",
+                    isSuccess: false
+                });
+            }
+            res.status(200).json({
+                message: "User Updated successfully",
+                isSuccess: true
+            });
+        }
+        catch (err) {
+            next(err);
+        }
+    }
+
+    //delete user
+    static async InactiveUser(req, res, next) {
+        try {
+            const email = req.body.email; // Assuming email is used as a unique identifier
+            const data = await user.findOneAndUpdate(
+                { email: email },
+                { isActive: false,modified_at:new Date() },
+                { new: true });
+            if (!data) {
+                return res.status(404).json({
+                    message: "User not found",
+                    isSuccess: false
+                });
+            }
+            res.status(200).json({
+                message: "User Deactivated successfully",
+                isSuccess: true
+            });
+        }
+        catch (err) {
+            next(err);
+        }
     }
 }

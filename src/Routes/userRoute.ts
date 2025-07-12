@@ -14,6 +14,8 @@ export class userRoute {
     }
     PostRoutes() {
         this.router.post('/adduser',UserController.insertUserdetails);
+        this.router.post('/updateuser',UserController.updateUserDetails);
+        this.router.post('/deactiveuser',UserController.InactiveUser);
     }
     patchRoutes() {
        
