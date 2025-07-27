@@ -10,4 +10,4 @@ const userSchema=new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-export default model('UserDetails', userSchema, 'UserDetails');
+export default model('userdetails', userSchema);
