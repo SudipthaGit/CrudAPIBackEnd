@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../Controller/UserController";
+import { GlobalMiddleware } from "../MiddleWare/GlobalMiddleWare";
 
 export class userRoute {
     public router: Router;
@@ -10,12 +11,13 @@ export class userRoute {
         this.patchRoutes();
     }
     getRoutes() {
-        this.router.get('/fetchuser',UserController.fetchUserDetails);
+        this.router.get('/fetchuser',GlobalMiddleware.authenticate, UserController.fetchUserDetails);
     }
     PostRoutes() {
-        this.router.post('/adduser',UserController.insertUserdetails);
-        this.router.post('/updateuser',UserController.updateUserDetails);
-        this.router.post('/deactiveuser',UserController.InactiveUser);
+        this.router.post('/adduser',GlobalMiddleware.authenticate, UserController.insertUserdetails);
+        this.router.post('/updateuser',GlobalMiddleware.authenticate, UserController.updateUserDetails);
+        this.router.post('/deactiveuser',GlobalMiddleware.authenticate, UserController.InactiveUser);
+        this.router.post('/login',UserController.login);
     }
     patchRoutes() {
        

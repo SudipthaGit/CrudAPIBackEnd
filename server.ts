@@ -13,7 +13,7 @@ export class server{
         this.HandleErrors();
     }
     setConfig(){
-        app.use(express.json());
+        this.app.use(express.json());
         this.ConnectToMongoDB();
         this.configuireBodyParser();
     }

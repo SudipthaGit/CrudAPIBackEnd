@@ -1,4 +1,5 @@
 import user from "../models/user";
+import { Auth } from "../Utils/Auth";
 
 export class UserController {
     static async fetchUserDetails(req, res, next) {
@@ -81,6 +82,36 @@ export class UserController {
                 message: "User Deactivated successfully",
                 isSuccess: true
             });
+        }
+        catch (err) {
+            next(err);
+        }
+    }
+    //login user
+    static async login(req, res, next)
+    {
+        try {
+            console.log("login called");
+            const { email, password } = req.body;
+            if(email=="admin@gmail.com" && password=="admin123")
+            {
+                console.log("token gen started...")
+                const token = Auth.JwtSignIn({ email: email });
+                console.log("Token",token);
+                res.status(200).json({
+                    message: "Login successful",
+                    isSuccess: true,
+                    token: token
+                });
+            }
+            else
+            {
+                console.log("Invalid email or password");   
+                res.status(401).json({
+                    message: "Invalid email or password",
+                    isSuccess: false
+                });
+            }
         }
         catch (err) {
             next(err);
